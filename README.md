@@ -24,6 +24,10 @@ cd /var/www/html && composer create-project --repository-url=https://repo.magent
 ```bash
 cp -r project-community-edition/* ../ && rm -rf project-community-edition
 ```
+- Set permissions
+```bash
+chown -R $USER:$USER *
+```
 - Install Magento2
 ```bash
 php ./bin/magento setup:install --base-url=http://magento2.local/ \
