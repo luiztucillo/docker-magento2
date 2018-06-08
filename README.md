@@ -13,19 +13,19 @@ Add to the */etc/hosts* file: __*127.0.0.1 mysql.localhost*__
 
 ## Magento 2 instal
 - Enter php container:
-```shell
-__docker container exec -it php7 bash__
+```bash
+docker container exec -it php7 bash
 ```
 - Download Magento2 from composer
-```shell
-__cd /var/www/html && composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition__
+```bash
+cd /var/www/html && composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition
 ```
 - Move files to root (Composer prevent create project inside non empty folder. So we download inside another folder and then move then back)
-```shell
-__cp -r project-community-edition/* ../ && rm -rf project-community-edition
+```bash
+cp -r project-community-edition/* ../ && rm -rf project-community-edition
 ```
 - Install Magento2
-```shell
+```bash
 php ./bin/magento setup:install --base-url=http://magento2.local/ \
 --db-host=mysql --db-name=dev_magento2 --db-user=root --db-password=1234qwer \
 --admin-firstname=Luiz --admin-lastname=Tucillo --admin-email=me@luiztucillo.com.br \
