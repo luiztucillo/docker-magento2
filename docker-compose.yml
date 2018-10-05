@@ -1,6 +1,6 @@
 nginx:
     image: nginx:latest
-    container_name: nginx_magento2
+    container_name: m2_nginx
     ports:
         - 80:80
         - 443:443
@@ -15,7 +15,7 @@ nginx:
         - php
 php:
     build: php
-    container_name: php7
+    container_name: m2_php
     volumes:
         - ../:/var/www/html
     links:
@@ -24,7 +24,7 @@ php:
     tty: true
 mysql:
     image: mysql:5.6
-    container_name: mysql
+    container_name: m2_mysql
     ports:
         - 3306:3306
     volumes:
@@ -33,7 +33,7 @@ mysql:
         - MYSQL_ROOT_PASSWORD=1234qwer
 mailhog:
     image: mailhog/mailhog
-    container_name: mailhog
+    container_name: m2_mailhog
     ports:
       - "1025:1025"
       - "8025:8025"
