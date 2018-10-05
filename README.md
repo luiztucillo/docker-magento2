@@ -12,9 +12,9 @@ As *PHP-FPM* uses *PORT __9000__*, xdebug was set to use *PORT __9001__* so you 
 Add to the */etc/hosts* file: __*127.0.0.1 mysql.localhost*__
 
 ## Magento 2 instal
-- Enter php container as user root:
+- Enter php container:
 ```bash
-docker container exec -it -u 0 m2_php bash
+docker container exec -it m2_php bash
 ```
 - Download Magento2 from composer
 ```bash
@@ -22,11 +22,11 @@ cd /var/www/html && composer create-project --repository-url=https://repo.magent
 ```
 - Move files to root (Composer prevent create project inside non empty folder. So we download inside another folder and then move then back)
 ```bash
-cp -r project-community-edition/* ../ && rm -rf project-community-edition
+cp -r project-community-edition/* ./ && rm -rf project-community-edition
 ```
 - Set permissions
 ```bash
-chown -R $USER:$USER *
+chown -R [user]: *
 ```
 - Install Magento2
 ```bash

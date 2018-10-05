@@ -45,7 +45,7 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/ext-xdebug.ini
 #COMPOSER
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
+    && rm composer-setup.php \
     && mv composer.phar /usr/bin/composer;
 
 #set folder owner for composer cache
