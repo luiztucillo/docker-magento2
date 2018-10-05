@@ -23,7 +23,7 @@ php:
     stdin_open: true
     tty: true
 mysql:
-    image: mysql:5.6
+    image: percona:5.6
     container_name: m2_mysql
     ports:
         - 3306:3306
