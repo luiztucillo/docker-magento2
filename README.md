@@ -14,7 +14,7 @@ Add to the */etc/hosts* file: __*127.0.0.1 mysql.localhost*__
 ## Magento 2 instal
 - Enter php container:
 ```bash
-docker container exec -it php7 bash
+docker container exec -it m2_php bash
 ```
 - Download Magento2 from composer
 ```bash
