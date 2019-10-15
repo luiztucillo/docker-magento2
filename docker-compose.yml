@@ -1,39 +1,65 @@
-nginx:
-    image: nginx:latest
+version: "2"
+services:
+  nginx:
+    build:
+      context: images/nginx
+      args:
+        username: ${USERNAME}
+        app_path: ${APP_PATH}
     container_name: m2_nginx
     ports:
-        - 80:80
-        - 443:443
+      - 80:80
+      - 443:443
+    volumes_from:
+      - php
     volumes:
-        - ../:/var/www/html
-        - ./config/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
-        - ./config/nginx/conf/magento2.conf:/etc/nginx/magento2.conf
-        - ../var/log/nginx:/var/log/nginx
-        - ./config/ssl/cert.pem:/etc/nginx/ssl/cert.pem
-        - ./config/ssl/cert.key:/etc/nginx/ssl/cert.key
+      - ./images/nginx/conf/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./images/nginx/conf/includes/:/etc/nginx/includes/
+      - ./images/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./images/nginx/conf/ssl/:/etc/nginx/ssl/
+      - ../var/log/nginx:/var/log/nginx
     links:
-        - php
-php:
-    build: php
+      - php
+
+  php:
+    build:
+      context: images/php
+      args:
+        username: ${USERNAME}
+        app_path: ${APP_PATH}
     container_name: m2_php
     volumes:
-        - ../:/var/www/html
+      - magento2v:/var/www/html:nocopy,delegated
+      - ~/docker-data/m2_php/composer/:/home/${USERNAME}/.composer/
     links:
-        - mysql
+      - mysql
     stdin_open: true
     tty: true
-mysql:
-    image: percona:5.6
+    environment:
+      XDEBUG_CONFIG: "remote_enabled=1;remote_port=9001;remote_connect_back=1;remote_autostart=1;"
+      PHP_XDEBUG_ENABLED: 1
+      PHP_IDE_CONFIG: "serverName=Docker"
+
+  mysql:
+    image: mysql:5.6
     container_name: m2_mysql
     ports:
-        - 3306:3306
+      - 3306:3306
     volumes:
-        - ~/docker-data/mysql56:/var/lib/mysql
+      - mysqlv:/etc/mysql/conf.d
     environment:
-        - MYSQL_ROOT_PASSWORD=1234qwer
-mailhog:
+      - MYSQL_ROOT_PASSWORD=1234qwer
+      - MYSQL_DATABASE=magento2
+
+  mailhog:
     image: mailhog/mailhog
     container_name: m2_mailhog
     ports:
       - "1025:1025"
       - "8025:8025"
+
+volumes:
+  magento2v:
+    external: true
+  mysqlv:
+    external: true
