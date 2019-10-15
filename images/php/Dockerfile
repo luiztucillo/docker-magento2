@@ -15,8 +15,8 @@ RUN apt-get update \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 #CONFIGURE
-COPY php.ini /usr/local/etc/php/php.ini
-COPY php-fpm.conf /usr/local/etc/
+#COPY php.ini /etc/php/7.3/fpm/php.ini
+COPY php-fpm.conf /etc/php/7.3/fpm/
 
 #COMPOSER
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
