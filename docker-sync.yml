@@ -10,6 +10,7 @@ syncs:
   magento2:
     notify_terminal: true
     src: '../app'
+    sync_strategy: 'unison'
     sync_excludes: [
       'Path .git',
       'Name .gitignore',

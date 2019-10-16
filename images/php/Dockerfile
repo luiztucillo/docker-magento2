@@ -15,7 +15,7 @@ RUN apt-get update \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 #CONFIGURE
-#COPY php.ini /etc/php/7.3/fpm/php.ini
+COPY php.ini /etc/php/7.3/fpm/php.ini
 COPY php-fpm.conf /etc/php/7.3/fpm/
 
 #COMPOSER

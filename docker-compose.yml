@@ -29,16 +29,14 @@ services:
         app_path: ${APP_PATH}
     container_name: m2_php
     volumes:
-      #- magento2:${APP_PATH}:nocopy
-      - ../app:${APP_PATH}
-      - ~/docker-data/m2_php/composer/auh.json:/home/${USERNAME}/.composer/auth.json
+      - magento2:${APP_PATH}:nocopy,delegated
+      #- ../app:${APP_PATH}:delegated
+      - ~/docker-data/m2_php/composer/auh.json:/home/${USERNAME}/.composer/auth.json:delegated
     links:
       - mysql
     stdin_open: true
     tty: true
     environment:
-      XDEBUG_CONFIG: "remote_enabled=1;remote_port=9001;remote_connect_back=1;remote_autostart=1;"
-      PHP_XDEBUG_ENABLED: 1
       PHP_IDE_CONFIG: "serverName=Docker"
 
   mysql:
@@ -50,7 +48,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
-      - ~/docker-data/mysql57:/var/lib/mysql
+      - ~/docker-data/mysql57:/var/lib/mysql:delegated
 
   mailhog:
     image: mailhog/mailhog
@@ -67,6 +65,7 @@ services:
 
   redismin:
     image: redsmin/proxy
+    container_name: m2_redismin
     environment:
       REDSMIN_KEY: ${REDISMIN_KEY}
       REDIS_URI: redis://redis:6379
@@ -76,3 +75,4 @@ volumes:
     external: true
 
 #bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=redis --cache-backend-redis-db=0
+#bin/magento setup:config:set --session-save=redis --session-save-redis-host=redis --session-save-redis-db=1
