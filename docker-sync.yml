@@ -3,15 +3,13 @@ version: "2"
 options:
   verbose: true
   compose-file-path: 'docker-compose.yml'
-  #unison_image: 'eugenmayer/unison'
   cli_mode: 'auto'
   max_attempt: 3000
 
 syncs:
-  magento2v:
+  magento2:
     notify_terminal: true
     src: '../app'
-    #sync_strategy: 'unison'
     sync_excludes: [
       'Path .git',
       'Name .gitignore',
@@ -26,10 +24,3 @@ syncs:
     ]
     sync_userid: '1000'
     max_attempt: 10
-
-  mysqlv:
-    notify_terminal: true
-    src: '~/docker-data/mysql57'
-    #sync_strategy: 'unison'
-    sync_prefer: 'src'
-    watch_in_container: true

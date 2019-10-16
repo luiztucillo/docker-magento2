@@ -29,8 +29,9 @@ services:
         app_path: ${APP_PATH}
     container_name: m2_php
     volumes:
-      - magento2v:/var/www/html:nocopy,delegated
-      - ~/docker-data/m2_php/composer/:/home/${USERNAME}/.composer/
+      #- magento2:${APP_PATH}:nocopy
+      - ../app:${APP_PATH}
+      - ~/docker-data/m2_php/composer/auh.json:/home/${USERNAME}/.composer/auth.json
     links:
       - mysql
     stdin_open: true
@@ -41,15 +42,15 @@ services:
       PHP_IDE_CONFIG: "serverName=Docker"
 
   mysql:
-    image: mysql:5.6
+    image: percona:5.7
     container_name: m2_mysql
     ports:
-      - 3306:3306
-    volumes:
-      - mysqlv:/etc/mysql/conf.d
+      - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=1234qwer
-      - MYSQL_DATABASE=magento2
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - ~/docker-data/mysql57:/var/lib/mysql
 
   mailhog:
     image: mailhog/mailhog
@@ -58,8 +59,20 @@ services:
       - "1025:1025"
       - "8025:8025"
 
+  redis:
+    image: redis:5.0
+    container_name: m2_redis
+    ports:
+      - 6379:6379
+
+  redismin:
+    image: redsmin/proxy
+    environment:
+      REDSMIN_KEY: ${REDISMIN_KEY}
+      REDIS_URI: redis://redis:6379
+
 volumes:
-  magento2v:
+  magento2:
     external: true
-  mysqlv:
-    external: true
+
+#bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=redis --cache-backend-redis-db=0
