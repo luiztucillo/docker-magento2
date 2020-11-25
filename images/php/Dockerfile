@@ -3,8 +3,7 @@ FROM phpdockerio/php73-fpm:latest
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN useradd -m ltucillo
-RUN usermod -aG sudo ltucillo
+RUN useradd -d /home/ltucillo -ms /bin/bash -g root -G sudo -p ltucillo ltucillo
 RUN mkdir -p /var/www/html
 RUN chown -R ltucillo: /var/www/html
 
