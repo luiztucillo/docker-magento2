@@ -42,7 +42,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
-      - ~/docker-data/mysql57:/var/lib/mysql
+      - ./docker-data/mysql57:/var/lib/mysql
 
   mailhog:
     image: mailhog/mailhog
@@ -63,16 +63,13 @@ services:
     environment:
       REDSMIN_KEY: ${REDISMIN_KEY}
       REDIS_URI: redis://redis:6379
+
   elk:
-    image: magento/magento-cloud-docker-elasticsearch
+    image: magento/magento-cloud-docker-elasticsearch:7.9-1.2.1
     container_name: m2_elk
     ports:
       - 9200:9200
       - 9300:9300
-    environment:
-      - ES_JAVA_OPTS="-Xms512m -Xmx512m"
-      - node.store.allow_mmapfs=false
-      - ES_PLUGINS="analysis-stempel analysis-nori"
   
   rabbitmq:
     image: rabbitmq:latest
