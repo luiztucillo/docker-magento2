@@ -5,10 +5,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN useradd -m ltucillo
 RUN usermod -aG sudo ltucillo
+RUN mkdir -p /var/www/html
 RUN chown -R ltucillo: /var/www/html
 USER ltucillo
-
-WORKDIR /var/www/html
 
 # Install selected extensions and other stuff
 RUN apt-get update \
