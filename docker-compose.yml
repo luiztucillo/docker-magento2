@@ -16,13 +16,10 @@ services:
   php:
     build:
       context: images/php
-      args:
-        username: ${USERNAME}
-        app_path: ${APP_PATH}
     container_name: m2_php
     volumes:
       - ./app:/var/www/html
-      - ./docker-data/php/composer/auh.json:/home/${USERNAME}/.composer/auth.json
+      - ./docker-data/php/composer/auh.json:~/.composer/auth.json
     links:
       - mysql
     stdin_open: true

@@ -3,6 +3,8 @@ FROM phpdockerio/php73-fpm:latest
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN useradd -m ltucillo
+
 # Install selected extensions and other stuff
 RUN apt-get update \
     && apt-get -y --no-install-recommends install  php-memcached php7.3-mysql php-redis php-xdebug php7.3-bcmath php7.3-gd php7.3-intl php7.3-soap \
