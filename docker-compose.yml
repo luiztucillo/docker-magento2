@@ -3,9 +3,6 @@ services:
   nginx:
     build:
       context: images/nginx
-      args:
-        username: ${USERNAME}
-        app_path: ${APP_PATH}
     container_name: m2_nginx
     ports:
       - 80:80
@@ -24,8 +21,8 @@ services:
         app_path: ${APP_PATH}
     container_name: m2_php
     volumes:
-      - ./app:${APP_PATH}
-      - ./docker-data/m2_php/composer/auh.json:/home/${USERNAME}/.composer/auth.json
+      - ./app:/var/www/html
+      - ./docker-data/php/composer/auh.json:/home/${USERNAME}/.composer/auth.json
     links:
       - mysql
     stdin_open: true
@@ -42,7 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
-      - ./docker-data/mysql57:/var/lib/mysql
+      - ./docker-data/mysql:/var/lib/mysql
 
   mailhog:
     image: mailhog/mailhog

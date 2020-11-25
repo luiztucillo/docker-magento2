@@ -1,11 +1,5 @@
 FROM phpdockerio/php73-fpm:latest
 
-ARG app_path
-ENV APP_PATH=$app_path
-
-ARG username
-ENV USERNAME=$username
-
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
