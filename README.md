@@ -9,7 +9,12 @@
 ## DOWNLOAD MAGENTO
 - If the composer is >= 2.0, runs `sudo composer self-update --1`
 - Runs inside continer
-  - `composer create-project -vvv --repository-url=https://repo.magento.com/ magento/project-community-edition /var/www/html/tmp && mv tmp/* ./ && mv tmp/.* ./ &&        rm -rf /var/www/html/tmp`
+```
+composer create-project -vvv --repository-url=https://repo.magento.com/ magento/project-community-edition /var/www/html/tmp \
+    && mv tmp/* ./ \
+    && mv tmp/.* ./ \
+    && rm -rf /var/www/html/tmp
+```
 
 ## INSTALL MAGENTO
 Set the vars below and run:

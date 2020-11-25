@@ -1,4 +1,4 @@
-version: "2"
+version: "3.8"
 services:
   nginx:
     build:
@@ -9,7 +9,7 @@ services:
     volumes_from:
       - php
     volumes:
-      - ../var/log/nginx:/var/log/nginx
+      - ./app:/var/www/html
     links:
       - php
 
@@ -19,7 +19,7 @@ services:
     container_name: m2_php
     volumes:
       - ./app:/var/www/html
-      - ./docker-data/php/composer/auh.json:/home/ltucillo/.composer/auth.json
+      - composer:/home/ltucillo/.composer
     links:
       - mysql
     stdin_open: true
@@ -36,7 +36,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
-      - ./docker-data/mysql:/var/lib/mysql
+      - db-data:/var/lib/mysql
 
   mailhog:
     image: mailhog/mailhog
@@ -73,6 +73,11 @@ services:
       - 5671:5671
       - 5672:5672
       - 25672:25672
+
+volumes:
+  db-data:
+  composer:
+
 
 #sysctl -w vm.max_map_count=262144
 #bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=redis --cache-backend-redis-db=0
