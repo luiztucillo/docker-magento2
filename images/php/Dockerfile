@@ -4,7 +4,7 @@ FROM phpdockerio/php73-fpm:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN useradd -m ltucillo
-
+RUN usermod -aG sudo ltucillo
 USER ltucillo
 
 # Install selected extensions and other stuff
