@@ -7,7 +7,6 @@ RUN useradd -m ltucillo
 RUN usermod -aG sudo ltucillo
 RUN mkdir -p /var/www/html
 RUN chown -R ltucillo: /var/www/html
-USER ltucillo
 
 # Install selected extensions and other stuff
 RUN apt-get update \
@@ -22,4 +21,8 @@ COPY php-fpm.conf /etc/php/7.3/fpm/
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && rm composer-setup.php \
-    && mv composer.phar /usr/bin/composer;
+    && mv composer.phar /usr/bin/composer \
+    && chmod +x /usr/bin;composer
+
+USER ltucillo
+WORKDIR /var/www/html

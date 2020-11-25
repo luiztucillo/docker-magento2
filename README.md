@@ -3,7 +3,7 @@
 
 ## INITIAL CONFIG
 - Define `server_name` in `images/nginx/conf/conf.d/default.conf`
-- Define username in `images/php/php-fpm;conf:11,12`, `images/php/Dockerfile:6,7,8`  and `images/nginx/conf/nginx.conf`
+- Define username in `images/php/php-fpm;conf:11,12`, `images/php/Dockerfile:6,7,9,27`  and `images/nginx/conf/nginx.conf`
 
 
 ## DOWNLOAD MAGENTO
