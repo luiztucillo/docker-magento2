@@ -19,7 +19,7 @@ services:
     container_name: m2_php
     volumes:
       - ./app:/var/www/html
-      - ./docker-data/php/composer/auh.json:~/.composer/auth.json
+      - ./docker-data/php/composer/auh.json:/home/ltucillo/.composer/auth.json
     links:
       - mysql
     stdin_open: true
