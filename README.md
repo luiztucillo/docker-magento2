@@ -1,9 +1,13 @@
 # INSTRUCTIONS
 
-## Configure APP
-Replace username in the below files in specified lines to you local username to prevent permission errors:
-- php/Dockerfile:52,53,54
-- php/php-fpm;conf:11,12
+
+## INITIAL CONFIG
+- Define `server_name` in `images/nginx/conf/conf.d/default.conf`
+- Define username in `.env` and `images/php/php-fpm;conf:11,12`
+
+
+
+
 
 ## Configure XDebug
 As *PHP-FPM* uses *PORT __9000__*, xdebug was set to use *PORT __9001__* so you need to set your *IDE* port of *XDEBUG* to *__9001__*
