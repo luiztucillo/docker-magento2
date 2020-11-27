@@ -6,10 +6,12 @@ services:
     container_name: m2_nginx
     ports:
       - 80:80
+      - 443:443
     volumes_from:
       - php
     volumes:
       - ./app:/var/www/html
+      - ./images/nginx/ssl:/etc/ssl
     links:
       - php
 
