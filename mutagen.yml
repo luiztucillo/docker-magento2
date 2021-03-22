@@ -1,0 +1,28 @@
+sync:
+  defaults:
+    mode: "two-way-resolved"
+    flushOnCreate: false
+    ignore:
+      vcs: true
+
+  magento-app:
+    alpha: app
+    beta: docker://m2-webserver/application
+
+  db:
+    alpha: magento-db
+    beta: docker://m2-db/var/lib/mysql
+
+# Set up the service and any volumes before creating sessions.
+beforeCreate:
+  - docker-compose up --build -d
+
+# Set up the main services after creating sessions. At this point, sessions will
+# have been established and code pushed to the shared volume.
+# After this is done, we can start up the deployment scripts.
+afterCreate:
+  - docker-compose up --build -d
+
+# Tear down all services and remove the code volume after terminating sessions.
+afterTerminate:
+  - docker-compose down --remove-orphans || true
