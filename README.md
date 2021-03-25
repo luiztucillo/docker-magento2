@@ -1,4 +1,7 @@
-# Download
+# Start with mutagen
+mutagen project terminate && mutagen project start
+
+# Download4
 docker exec -it m2-php-fpm composer create-project -vvv --repository-url=https://repo.magento.com/ magento/project-community-edition .
 
 # Install

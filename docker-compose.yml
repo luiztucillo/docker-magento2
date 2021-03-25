@@ -20,6 +20,7 @@ services:
     working_dir: /application
     volumes:
       - magento-app:/application:delegated
+      - mercadopago-plugin:/application/app/code/MercadoPago
       - composer:/root/.config/composer/
       - ./php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
     networks:
@@ -38,6 +39,7 @@ services:
     volumes:
       - magento-app:/app:delegated
       - magento-db:/var/lib/mysql
+      - mariadb-cnf:/etc/mysql/conf.d
     healthcheck:
       test: mysqladmin ping -h localhost
       interval: 30s
@@ -76,14 +78,24 @@ services:
         - magento
 
 volumes:
+  mariadb-cnf:
+    driver_opts:
+      type: none
+      device: mysql/etc/mysql/conf.d
+      o: bind
   magento-app:
     driver_opts:
       type: none
-      device: ${PWD}/app
+      device: app
       o: bind
   magento-db:
   composer:
   elasticsearch:
+  mercadopago-plugin:
+    driver_opts:
+      type: none
+      device: mercadopago/src/MercadoPago
+      o: bind
 
 networks:
   magento:

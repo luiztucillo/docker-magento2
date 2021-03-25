@@ -1,17 +1,45 @@
 sync:
   defaults:
     mode: "two-way-resolved"
-    flushOnCreate: false
+    flushOnCreate: true
     ignore:
       vcs: true
+    permissions:
+      defaultFileMode: 0644
+      defaultDirectoryMode: 0755
 
-  magento-app:
+  src:
     alpha: app
     beta: docker://m2-webserver/application
+#    configurationBeta:
+#      permissions:
+#        defaultOwner: app
+#        defaultGroup: app
+    ignore:
+      paths:
+        - .idea
+        - .vscode
+        - .m2c
+        - /.env
+        - /bin
+        - /generated
+        - /pub/media/catalog/product
+        - /pub/static
+        - /var
+        - /vendor
+        - node_modules
 
-  db:
-    alpha: magento-db
-    beta: docker://m2-db/var/lib/mysql
+  vendor:
+    alpha: docker://m2-webserver/application/vendor
+    beta: app/vendor
+    configurationAlpha:
+#      permissions:
+#        defaultOwner: app
+#        defaultGroup: app
+      watch:
+        mode: no-watch
+    symlink:
+      mode: posix-raw
 
 # Set up the service and any volumes before creating sessions.
 beforeCreate:
@@ -25,4 +53,4 @@ afterCreate:
 
 # Tear down all services and remove the code volume after terminating sessions.
 afterTerminate:
-  - docker-compose down --remove-orphans || true
+  - docker-compose down || true
